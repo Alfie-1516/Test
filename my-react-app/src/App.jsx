@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CustomForm from "./components/form";
-import { Typography, List } from "antd";
+import { Typography, Table } from "antd";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -21,6 +21,13 @@ function App() {
     };
     fetchUsers();
   }, []);
+  //Table Columns
+  const columns = [
+    { title: "First Name", dataIndex: "firstName", key: "firstName" },
+    { title: "Last Name", dataIndex: "lastName", key: "lastName" },
+    { title: "Email", dataIndex: "email", key: "email" },
+    { title: "Phone", dataIndex: "phoneNumber", key: "phoneNumber" },
+  ];
 
   //Renders the app UI
   return (
@@ -30,14 +37,10 @@ function App() {
       {/* Show users available in the database */}
 
       {users.length > 0 ? (
-        <List
-          bordered
+        <Table
           dataSource={users}
-          renderItem={(user) => (
-            <List.Item>
-              {user.firstName} {user.lastName}
-            </List.Item>
-          )}
+          columns={columns}
+          rowKey={(record) => record.id || record.email}
         />
       ) : (
         <p>Loading or no users found.</p>
